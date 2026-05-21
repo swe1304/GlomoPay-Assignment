@@ -160,7 +160,7 @@ Authorization: Bearer <token>
     "name": "Alice",
     "email": "alice@example.com"
   },
-  "balance": 1000.0
+  "balance": 1000.00
 }
 ```
 
@@ -195,8 +195,8 @@ Content-Type: application/json
 ```json
 {
   "message": "Deposit successful",
-  "deposited": 250.5,
-  "new_balance": 1250.5
+  "deposited": "250.50",
+  "new_balance": "1250.50"
 }
 ```
 
@@ -207,7 +207,9 @@ Content-Type: application/json
 - Valid: `100`, `50.5`, `50.59`
 - Invalid: `-5`, `0`, `"abc"`, `50.5903`
 
----
+#### Money format in responses
+
+Balances and amounts are returned as *strings* (e.g. "1000.00") to preserve exact 2-decimal monetary values across clients (many JSON consumers parse numbers as floating-point).
 
 ## Error handling
 
