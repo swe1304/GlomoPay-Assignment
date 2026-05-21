@@ -10,7 +10,7 @@ module Api
             name: current_user.name,
             email: current_user.email
           },
-          balance: current_user.rounded_balance.to_f
+          balance: money_str(current_user.rounded_balance)
         }
       end
     end

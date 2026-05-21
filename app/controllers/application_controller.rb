@@ -12,6 +12,8 @@ class ApplicationController < ActionController::API
     token = request.headers["Authorization"]&.split(" ")&.last
     @current_user = User.find_by(auth_token: token) if token
 
+    return if @current_user
+
     render json: { error: "Unauthorized" }, status: :unauthorized unless @current_user
   end
 
@@ -40,5 +42,14 @@ class ApplicationController < ActionController::API
     Rails.logger.error("Unexpected error: #{exception.message}")
     Rails.logger.error(exception.backtrace.join("\n"))
     render json: { error: "An unexpected error occurred" }, status: :internal_server_error
+  end
+
+  def money_str(amount)
+    s = amount.to_d.round(2).to_s("F")
+    return "#{s}.00" unless s.include?(".")
+  
+    whole, frac = s.split(".", 2)
+    frac = frac.ljust(2, "0")[0, 2]
+    "#{whole}.#{frac}"
   end
 end

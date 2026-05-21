@@ -14,8 +14,8 @@ module Api
 
         render json: {
           message: "Deposit successful",
-          deposited: amount_decimal.round(2).to_f,
-          new_balance: new_balance.to_f
+          deposited: money_str(amount_decimal),
+          new_balance: money_str(new_balance)
         }, status: :ok
       end
 

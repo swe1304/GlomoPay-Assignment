@@ -3,7 +3,7 @@ class User < ApplicationRecord
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: { case_sensitive: false }
-  validates :pin, length: { is: 4 }, on: :create
+  validates :pin, presence: true, format: { with: /\A\d{4}\z/, message: "must be exactly 4 digits" }, on: :create
   validates :balance, numericality: { greater_than_or_equal_to: 0 }
 
   before_save :downcase_email
