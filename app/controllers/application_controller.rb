@@ -13,8 +13,7 @@ class ApplicationController < ActionController::API
     @current_user = User.find_by(auth_token: token) if token
 
     return if @current_user
-
-    render json: { error: "Unauthorized" }, status: :unauthorized unless @current_user
+    render json: { error: "Unauthorized" }, status: :unauthorized
   end
 
   attr_reader :current_user
@@ -47,7 +46,6 @@ class ApplicationController < ActionController::API
   def money_str(amount)
     s = amount.to_d.round(2).to_s("F")
     return "#{s}.00" unless s.include?(".")
-  
     whole, frac = s.split(".", 2)
     frac = frac.ljust(2, "0")[0, 2]
     "#{whole}.#{frac}"
